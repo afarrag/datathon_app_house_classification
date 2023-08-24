@@ -82,6 +82,9 @@ def update_and_plot_submissions(participant_results, participant_name):
 def display_leaderboard():
     try:
         show_leaderboard()
+    except:
+        st.write("There is no submission.")
+      
 def autoplay_audio(file_path: str):
     with open(file_path, "rb") as f:
         data = f.read()
@@ -95,8 +98,6 @@ def autoplay_audio(file_path: str):
             md,
             unsafe_allow_html=True,
         )
-    except:
-        st.write("There is no submission.")
 
 if __name__ == "__main__":
     main()
