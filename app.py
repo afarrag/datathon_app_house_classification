@@ -62,6 +62,7 @@ def process_uploaded_file(uploaded_file, participant_name):
             update_and_plot_submissions(participant_results, participant_name)
         except Exception as e:
             st.error(f'The file could not be processed. Error: {e}')
+            st.exception(e)
     else:
         st.error('The file has a wrong format, please, review it and ensure it contains the required columns.')
 
