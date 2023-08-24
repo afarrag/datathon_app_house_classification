@@ -104,7 +104,7 @@ def rain(photo,x):
   animation-fill-mode: forwards;
   width: 100px;
   top: 0;
-  left: "%d vw";
+  left: %dvw;
 }
 
 @keyframes slidedown {
