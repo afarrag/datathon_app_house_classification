@@ -52,7 +52,7 @@ def process_uploaded_file(uploaded_file, participant_name):
             participant_results = get_accuracy(RESULTS_PATH, test)
 
             st.success('Dataframe uploaded successfully!')
-            all_data=pd.pickle_read('files_to_update/submissions.pkl')
+            all_data=pd.read_pickle('files_to_update/submissions.pkl')
             if participant_results['accuracy'] > all_data.accuracy.max():
                 st.write('<script>document.getElementById("celebrate_audio").play();</script>',unsafe_allow_html=True)
             else:
