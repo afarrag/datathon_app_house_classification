@@ -53,7 +53,7 @@ def process_uploaded_file(uploaded_file, participant_name):
 
             st.success('Dataframe uploaded successfully!')
             all_data=pd.read_pickle('files_to_update/submissions.pkl')
-            if (participant_results['accuracy']) > (all_data.accuracy.max()):
+            if (participant_results.loc[0,'accuracy']) > (all_data.accuracy.max()):
                 st.write('<script>document.getElementById("celebrate_audio").play();</script>',unsafe_allow_html=True)
             else:
                 st.write('<script>document.getElementById("result_added").play();</script>',unsafe_allow_html=True)
