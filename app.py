@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from src.pd_functions import *
 from src.utils import validate_csv_file
+import base64
 
 # Constants
 RESULTS_PATH = 'data/results_housing_class.csv'
