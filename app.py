@@ -7,11 +7,11 @@ from src.utils import validate_csv_file
 RESULTS_PATH = 'data/results_housing_class.csv'
 html='''
 <audio id="celebrate_audio" preload>  
-  <source src="claps.mp3" type="audio/mpeg">
+  <source src="media/claps.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
 <audio id="result_added" preload>  
-  <source src="success.mp3" type="audio/mpeg">
+  <source src="media/success.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
 '''
