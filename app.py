@@ -109,7 +109,7 @@ def rain(photo,x):
 
 @keyframes slidedown {
   to {
-    top: 120%;
+    top: 120%%;
   }
 }
     """ % (x)
