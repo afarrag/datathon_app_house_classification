@@ -5,7 +5,16 @@ from src.utils import validate_csv_file
 
 # Constants
 RESULTS_PATH = 'data/results_housing_class.csv'
-
+html='''
+<audio id="celebrate_audio" preload>  
+  <source src="claps.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+<audio id="result_added" preload>  
+  <source src="success.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+'''
 def main():
     st.title('Housing Classification App')
     st.write('Welcome to the housing classification app. Please enter your name and upload your results file to check your accuracy and see the leaderboard.')
@@ -43,6 +52,11 @@ def process_uploaded_file(uploaded_file, participant_name):
             participant_results = get_accuracy(RESULTS_PATH, test)
 
             st.success('Dataframe uploaded successfully!')
+            all_data=pd.pickle_read('files_to_update/submissions.pkl')
+            if participant_results['accuracy'] > all_data.accuracy.max():
+                st.write('<script>document.getElementById("celebrate_audio").play();</script>',unsafe_allow_html=True)
+            else:
+                st.write('<script>document.getElementById("result_added").play();</script>',unsafe_allow_html=True)
             display_participant_results(participant_results)
             update_and_plot_submissions(participant_results, participant_name)
         except Exception as e:
