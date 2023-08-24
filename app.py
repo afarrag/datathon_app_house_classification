@@ -17,7 +17,7 @@ html='''
 '''
 def main():
     st.title('Housing Classification App')
-    st.write(html,unsafe_allow_html=True)
+    st.markdown(html,unsafe_allow_html=True)
     st.write('Welcome to the housing classification app. Please enter your name and upload your results file to check your accuracy and see the leaderboard.')
 
     participant_name = get_participant_name()
@@ -55,9 +55,9 @@ def process_uploaded_file(uploaded_file, participant_name):
             st.success('Dataframe uploaded successfully!')
             all_data=pd.read_pickle('files_to_update/submissions.pkl')
             if (participant_results.iloc[0,1]) > (all_data.accuracy.max()):
-                st.write('<script>document.getElementById("celebrate_audio").play();</script>',unsafe_allow_html=True)
+                st.markdown('<script>document.getElementById("celebrate_audio").play();</script>',unsafe_allow_html=True)
             else:
-                st.write('<script>document.getElementById("result_added").play();</script>',unsafe_allow_html=True)
+                st.markdown('<script>document.getElementById("result_added").play();</script>',unsafe_allow_html=True)
             display_participant_results(participant_results)
             update_and_plot_submissions(participant_results, participant_name)
         except Exception as e:
