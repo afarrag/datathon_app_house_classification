@@ -50,6 +50,7 @@ def process_uploaded_file(uploaded_file, participant_name):
             all_data=pd.read_pickle('files_to_update/submissions.pkl')
             if (participant_results.iloc[0,1]) > (all_data.accuracy.max()):
                 autoplay_audio('static/claps.mp3')
+                rain("great.png",math.floor(random.random()*100))
             else:
                 autoplay_audio('static/success.mp3')
                 rain("good.png",math.floor(random.random()*100))
