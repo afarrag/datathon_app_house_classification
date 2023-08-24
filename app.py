@@ -7,16 +7,7 @@ from streamlit.components.v1 import html
 
 # Constants
 RESULTS_PATH = 'data/results_housing_class.csv'
-html='''
-<audio id="celebrate_audio" preload>  
-  <source src="./app/static/claps.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
-<audio id="result_added" preload>  
-  <source src="./app/static/success.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
-'''
+
 def main():
     st.title('Housing Classification App')
     st.markdown(html,unsafe_allow_html=True)
