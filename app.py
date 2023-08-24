@@ -3,6 +3,7 @@ import pandas as pd
 from src.pd_functions import *
 from src.utils import validate_csv_file
 import base64
+from streamlit.components.v1 import html
 
 # Constants
 RESULTS_PATH = 'data/results_housing_class.csv'
@@ -59,6 +60,7 @@ def process_uploaded_file(uploaded_file, participant_name):
                 autoplay_audio('static/claps.mp3')
             else:
                 autoplay_audio('static/success.mp3')
+                rain()
             display_participant_results(participant_results)
             update_and_plot_submissions(participant_results, participant_name)
         except Exception as e:
@@ -91,7 +93,7 @@ def autoplay_audio(file_path: str):
         data = f.read()
         b64 = base64.b64encode(data).decode()
         md = f"""
-            <audio controls autoplay="true">
+            <audio autoplay="true">
             <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
             </audio>
             """
@@ -99,6 +101,40 @@ def autoplay_audio(file_path: str):
             md,
             unsafe_allow_html=True,
         )
+  def rain():
+    # Define your javascript
+    my_js = """
+    var rainDiv = document.querySelector('#action');
+function appendImage() {
+  var img = document.createElement('img');
+  img.setAttribute('src', 'http://pixelartmaker.com/art/3ba7f5717ac3c63.png');
+  img.style.left = Math.floor(Math.random() * 100) + 'vw';
+  rainDiv.appendChild(img);}
+  appendImage();
+    """
+    my_css="""
+    img {
+  position: fixed;
+  animation-duration: 20s;
+  animation-name: slidedown;
+  animation-fill-mode: forwards;
+  height: 100px;
+  width: 100px;
+  top: 0;
+}
+
+@keyframes slidedown {
+  to {
+    top: 120%;
+  }
+}
+    """
+    # Wrapt the javascript as html code
+    my_html = f"<style>{my_css}</style><script>{my_js}</script>"
+    
+    # Execute your app
+    st.title("Javascript example")
+    html(my_html)
 
 if __name__ == "__main__":
     main()
