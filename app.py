@@ -111,7 +111,7 @@ def rain():
 }
     """
     # Wrapt the javascript as html code
-    my_html = f'<style>{my_css}</style><img class="rainPhoto" src="./app/static/good.png" onload="event.target.style.left = Math.floor(Math.random() * 100) + 'vw';"/>'
+    my_html = f'<style>{my_css}</style><img class="rainPhoto" src="./app/static/good.png" onload=\'event.target.style.left = Math.floor(Math.random() * 100) + "vw";\'/>'
     st.write(my_html,unsafe_allow_html=True)
     
 
