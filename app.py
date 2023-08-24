@@ -101,7 +101,7 @@ def autoplay_audio(file_path: str):
             md,
             unsafe_allow_html=True,
         )
-  def rain():
+def rain():
     # Define your javascript
     my_js = """
     var rainDiv = document.querySelector('#action');
