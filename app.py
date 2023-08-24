@@ -121,7 +121,7 @@ function appendImage() {
 }
     """
     # Wrapt the javascript as html code
-    my_html = f"<style>{my_css}</style><script>{my_js}</script>"
+    my_html = f'<style>{my_css}</style><script>{my_js}</script><input type="button" value="Test Button" onclick="appendImage();" /><div id="action"></div>'
     
     # Execute your app
     st.title("Javascript example")
