@@ -95,7 +95,7 @@ def autoplay_audio(file_path: str):
 def rain():
     # Define your javascript
     my_js = """
-    var rainDiv = document.body;
+    var rainDiv = window.parent.document.body;
 function appendImage() {
   var img = document.createElement('img');
   img.setAttribute('src', 'http://pixelartmaker.com/art/3ba7f5717ac3c63.png');
