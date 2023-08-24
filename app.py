@@ -113,7 +113,7 @@ def rain(photo,x):
 }
     """
     # Wrapt the javascript as html code
-    my_html = f'<style>{my_css}</style><img class="rainPhoto" src="./app/static/{photo}" onload=\'event.target.style.left = "{x}vw";\'/>'
+    my_html = f'<style>{my_css}</style><img class="rainPhoto" src="./app/static/{photo}" style=\'left: "{x}vw";\'/>'
     st.write(my_html,unsafe_allow_html=True)
     
 
