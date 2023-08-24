@@ -4,6 +4,8 @@ from src.pd_functions import *
 from src.utils import validate_csv_file
 import base64
 from streamlit.components.v1 import html
+import random
+import math
 
 # Constants
 RESULTS_PATH = 'data/results_housing_class.csv'
@@ -50,7 +52,7 @@ def process_uploaded_file(uploaded_file, participant_name):
                 autoplay_audio('static/claps.mp3')
             else:
                 autoplay_audio('static/success.mp3')
-                rain()
+                rain("good.png",math.floor(random.random()*100))
             display_participant_results(participant_results)
             update_and_plot_submissions(participant_results, participant_name)
         except Exception as e:
@@ -91,7 +93,7 @@ def autoplay_audio(file_path: str):
             md,
             unsafe_allow_html=True,
         )
-def rain():
+def rain(photo,x):
     # Define your javascript
    
     my_css="""
@@ -111,7 +113,7 @@ def rain():
 }
     """
     # Wrapt the javascript as html code
-    my_html = f'<style>{my_css}</style><img class="rainPhoto" src="./app/static/good.png" onload=\'event.target.style.left = Math.floor(Math.random() * 100) + "vw";\'/>'
+    my_html = f'<style>{my_css}</style><img class="rainPhoto" src="./app/static/{photo}" onload=\'event.target.style.left = "{x}vw";\'/>'
     st.write(my_html,unsafe_allow_html=True)
     
 
