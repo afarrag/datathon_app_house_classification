@@ -10,7 +10,6 @@ RESULTS_PATH = 'data/results_housing_class.csv'
 
 def main():
     st.title('Housing Classification App')
-    st.markdown(html,unsafe_allow_html=True)
     st.write('Welcome to the housing classification app. Please enter your name and upload your results file to check your accuracy and see the leaderboard.')
 
     participant_name = get_participant_name()
@@ -94,17 +93,9 @@ def autoplay_audio(file_path: str):
         )
 def rain():
     # Define your javascript
-    my_js = """
-    var rainDiv = document.querySelector('#action');
-function appendImage() {
-  var img = document.createElement('img');
-  img.setAttribute('src', 'https://pixelartmaker.com/art/3ba7f5717ac3c63.png');
-  img.style.left = Math.floor(Math.random() * 100) + 'vw';
-  rainDiv.appendChild(img);}
-  appendImage();
-    """
+   
     my_css="""
-    img {
+    .rainPhoto {
   position: fixed;
   animation-duration: 20s;
   animation-name: slidedown;
@@ -121,7 +112,8 @@ function appendImage() {
 }
     """
     # Wrapt the javascript as html code
-    my_html = f'<style>{my_css}</style><script>{my_js}</script><input type="button" value="Test Button" onclick="appendImage();" /><div id="action"></div>'
+    my_html = f'<style>{my_css}</style><img class="rainPhoto" src="./app/static/good.png"/>'
+    st.write(my_html,unsafe_allow_html=True)
     
     # Execute your app
     st.title("Javascript example")
