@@ -104,7 +104,7 @@ def rain(photo,x):
   animation-fill-mode: forwards;
   width: 100px;
   top: 0;
-  left: "%d vw";
+  left: "{0} vw";
 }
 
 @keyframes slidedown {
@@ -112,7 +112,7 @@ def rain(photo,x):
     top: 120%;
   }
 }
-    """ % (x)
+    """ .format (x)
     # Wrapt the javascript as html code
     my_html = f'<style>{my_css}</style><img class="rainPhoto" src="./app/static/{photo}"/>'
     st.write(my_html,unsafe_allow_html=True)
