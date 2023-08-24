@@ -96,7 +96,7 @@ def autoplay_audio(file_path: str):
 def rain(photo,x):
     # Define your javascript
    
-    my_css="""
+    my_css=f"""
     .rainPhoto {
   position: fixed;
   animation-duration: 20s;
@@ -104,6 +104,7 @@ def rain(photo,x):
   animation-fill-mode: forwards;
   width: 100px;
   top: 0;
+  left: "{x}vw";
 }
 
 @keyframes slidedown {
@@ -113,7 +114,7 @@ def rain(photo,x):
 }
     """
     # Wrapt the javascript as html code
-    my_html = f'<style>{my_css}</style><img class="rainPhoto" src="./app/static/{photo}" style=\'left: "{x}vw";\'/>'
+    my_html = f'<style>{my_css}</style><img class="rainPhoto" src="./app/static/{photo}"/>'
     st.write(my_html,unsafe_allow_html=True)
     
 
