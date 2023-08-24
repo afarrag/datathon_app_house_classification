@@ -100,7 +100,6 @@ def rain():
   animation-duration: 20s;
   animation-name: slidedown;
   animation-fill-mode: forwards;
-  height: 100px;
   width: 100px;
   top: 0;
 }
@@ -115,9 +114,6 @@ def rain():
     my_html = f'<style>{my_css}</style><img class="rainPhoto" src="./app/static/good.png"/>'
     st.write(my_html,unsafe_allow_html=True)
     
-    # Execute your app
-    st.title("Javascript example")
-    html(my_html)
 
 if __name__ == "__main__":
     main()
