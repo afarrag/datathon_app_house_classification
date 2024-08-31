@@ -60,7 +60,7 @@ def get_accuracy(RESULTS_PATH: str, test: pd.DataFrame):
             )
             .merge(test, how='left', on='id')
             .assign(check=lambda df_: df_['real'] == df_['preds'])
-            .agg(result=('check', 'sum'))
+            .agg({'check': ['sum']})
             .assign(
                 accuracy=lambda df_: df_['check'] / results.shape[0],
                 participant=st.session_state.text_input,
