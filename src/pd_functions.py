@@ -107,7 +107,7 @@ def update_submissions(participant_results: pd.DataFrame):
     submissions_df = get_submissions_dataframe()
     updated_submissions_df = pd.concat([submissions_df, participant_results])
     #updated_submissions_df.to_pickle('files_to_update/submissions.pkl')
-    updated_submissions_df.to_sql("submissions",con=connection_string,if_exists='append', index=False)
+    updated_submissions_df.to_sql("submissions",con=connection_string,if_exists='replace', index=False)
 
 
 def show_leaderboard(): 
@@ -148,4 +148,4 @@ def update_submissions(participant_results: pd.DataFrame):
     submissions_df = get_submissions_dataframe()
     updated_submissions_df = pd.concat([submissions_df, participant_results])
     #updated_submissions_df.to_pickle('files_to_update/submissions.pkl')
-    updated_submissions_df.to_sql("submissions",con=connection_string,if_exists='append', index=False)
+    updated_submissions_df.to_sql("submissions",con=connection_string,if_exists='replace', index=False)

@@ -21,12 +21,6 @@ def main():
     st.write('Welcome to the housing classification app. Please enter your name and upload your results file to check your accuracy and see the leaderboard.')
 
 
-    try:
-        pd.read_pickle('files_to_update/submissions.pkl').to_sql("submissions",index=False, con=connection_string, if_exists='append')
-    except: pass
-    else:
-        st.success('found pkl, copied to sql')
-        os.remove('files_to_update/submissions.pkl')
 
     participant_name = get_participant_name()
 
@@ -97,7 +91,7 @@ def update_and_plot_submissions(participant_results, participant_name):
         plot_submissions(participant_name)
     except:
         #participant_results.to_pickle('files_to_update/submissions.pkl')
-        participant_results.to_sql("submissions",con=connection_string,if_exists='append', index=False)
+        participant_results.to_sql("submissions",con=connection_string,if_exists='replace', index=False)
 
 def display_leaderboard():
     try:
