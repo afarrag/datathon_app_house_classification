@@ -6,13 +6,27 @@ import base64
 from streamlit.components.v1 import html
 import random
 import math
+import os
+
 
 # Constants
 RESULTS_PATH = 'data/results_housing_class.csv'
+from urllib.parse import quote_plus
+
+dbuser,dbpass,dbhost,dbport = os.getenv('dbuser'),quote_plus(os.getenv('dbpass')),os.getenv('dbhost'),os.getenv('dbport')
+connection_string = f'mysql+pymysql://{dbuser}:{dbpass}@{dbhost}:{dbport}/housing'
 
 def main():
     st.title('Housing Classification App')
     st.write('Welcome to the housing classification app. Please enter your name and upload your results file to check your accuracy and see the leaderboard.')
+
+
+    try:
+        pd.read_pickle('files_to_update/submissions.pkl').to_sql("submissions",index=False, con=connection_string, if_exists='append')
+    except: pass
+    else:
+        st.success('found pkl, copied to sql')
+        os.remove('files_to_update/submissions.pkl')
 
     participant_name = get_participant_name()
 
@@ -47,7 +61,10 @@ def process_uploaded_file(uploaded_file, participant_name):
             participant_results = get_accuracy(RESULTS_PATH, test)
 
             st.success('Dataframe uploaded successfully!')
-            all_data=pd.read_pickle('files_to_update/submissions.pkl')
+
+            all_data = pd.read_sql("submissions",con=connection_string)
+            
+            #all_data=pd.read_pickle('files_to_update/submissions.pkl')
             if (participant_results.iloc[0,1]) > (all_data.accuracy.max()):
                 autoplay_audio('static/claps.mp3')
                 rain("great.png",math.floor(random.random()*100))
@@ -60,7 +77,7 @@ def process_uploaded_file(uploaded_file, participant_name):
 
             if (participant_results.iloc[0,1]) > (all_data.accuracy.max()):
                 with st.status("Sending to Slack..."):
-                    send_msg_to_slack(participant_results.iloc[0,0])
+                    send_msg_to_slack(participant_results.iloc[0,0],participant_results.iloc[0,1])
                 st.success("Sent to Slack")
         except Exception as e:
             st.error(f'The file could not be processed. Error: {e}')
@@ -79,7 +96,8 @@ def update_and_plot_submissions(participant_results, participant_name):
         update_submissions(participant_results)
         plot_submissions(participant_name)
     except:
-        participant_results.to_pickle('files_to_update/submissions.pkl')
+        #participant_results.to_pickle('files_to_update/submissions.pkl')
+        participant_results.to_sql("submissions",con=connection_string,if_exists='append', index=False)
 
 def display_leaderboard():
     try:
@@ -124,7 +142,7 @@ def rain(photo,x):
     my_html = f'<style>{my_css}</style><img class="rainPhoto" src="./app/static/{photo}"/>'
     st.write(my_html,unsafe_allow_html=True)
     
-def send_msg_to_slack(new_top):
+def send_msg_to_slack(new_top,new_score):
     from selenium import webdriver
     from selenium.webdriver.common.keys import Keys
     import time
@@ -182,7 +200,7 @@ def send_msg_to_slack(new_top):
     driver.get(CHANNEL_URL)
     time.sleep(2)  # Adjust if necessary to allow time for page load
 
-    msg = f":rocket: :trophy: {new_top} is now #1 on the [LEADERBORD](https://datathon.streamlit.app)!"
+    msg = f":rocket: :trophy: {new_top} is now #1 on the [LEADERBORD](https://datathon.streamlit.app) with score {new_score}!"
 
     message_box = driver.find_element(By.CLASS_NAME, 'ql-editor')
     message_box.send_keys(msg)

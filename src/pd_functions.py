@@ -1,6 +1,11 @@
 import pandas as pd
 import streamlit as st
 import io
+import os
+from urllib.parse import quote_plus
+
+dbuser,dbpass,dbhost,dbport = os.getenv('dbuser'),quote_plus(os.getenv('dbpass')),os.getenv('dbhost'),os.getenv('dbport')
+connection_string = f'mysql+pymysql://{dbuser}:{dbpass}@{dbhost}:{dbport}/housing'
 
 def get_ready_test(RESULTS_PATH: str, uploaded_file):
     """
@@ -80,7 +85,7 @@ def plot_submissions(participant_name):
         participant_name (str): Name of the participant.
     """
     participant_submissions = (
-        pd.read_pickle('files_to_update/submissions.pkl')
+        pd.read_sql("submissions",con=connection_string)
             .query('participant == @participant_name')
             .filter(['submission_time', 'accuracy'])
             .set_index('submission_time')
@@ -101,7 +106,8 @@ def update_submissions(participant_results: pd.DataFrame):
     """
     submissions_df = get_submissions_dataframe()
     updated_submissions_df = pd.concat([submissions_df, participant_results])
-    updated_submissions_df.to_pickle('files_to_update/submissions.pkl')
+    #updated_submissions_df.to_pickle('files_to_update/submissions.pkl')
+    updated_submissions_df.to_sql("submissions",con=connection_string,if_exists='append', index=False)
 
 
 def show_leaderboard(): 
@@ -117,7 +123,7 @@ def show_leaderboard():
 
 def get_submissions_dataframe():
     try:
-        return pd.read_pickle('files_to_update/submissions.pkl')
+        return pd.read_sql("submissions",con=connection_string) #pd.read_pickle('files_to_update/submissions.pkl')
     except FileNotFoundError:
         return pd.DataFrame(columns=['participant', 'accuracy', 'submission_time'])
 
@@ -141,4 +147,5 @@ def generate_leaderboard_dataframe(submissions_df):
 def update_submissions(participant_results: pd.DataFrame):
     submissions_df = get_submissions_dataframe()
     updated_submissions_df = pd.concat([submissions_df, participant_results])
-    updated_submissions_df.to_pickle('files_to_update/submissions.pkl')
+    #updated_submissions_df.to_pickle('files_to_update/submissions.pkl')
+    updated_submissions_df.to_sql("submissions",con=connection_string,if_exists='append', index=False)
