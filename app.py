@@ -188,12 +188,15 @@ def send_msg_to_slack(new_top,new_score):
     password_input.send_keys(PASSWORD)
     password_input.send_keys(Keys.RETURN)
     time.sleep(5)  # Adjust if necessary to allow time for page load
-
+    st.write('title: '+driver.title)
+    st.image(driver.get_screenshot_as_png())
 
     # Open Slack and login
     driver.get(CHANNEL_URL)
     time.sleep(5)  # Adjust if necessary to allow time for page load
     st.write('title: '+driver.title)
+    st.image(driver.get_screenshot_as_png())
+    
     msg = f":rocket: :trophy: {new_top} is now #1 on the [LEADERBORD](https://datathon.streamlit.app) with score {new_score}!"
 
     message_box = driver.find_element(By.CLASS_NAME, 'ql-editor')
