@@ -192,7 +192,7 @@ def send_msg_to_slack(new_top,new_score):
 
     # Open Slack and login
     driver.get(CHANNEL_URL)
-    time.sleep(2)  # Adjust if necessary to allow time for page load
+    time.sleep(5)  # Adjust if necessary to allow time for page load
 
     msg = f":rocket: :trophy: {new_top} is now #1 on the [LEADERBORD](https://datathon.streamlit.app) with score {new_score}!"
 
