@@ -91,7 +91,7 @@ def update_and_plot_submissions(participant_results, participant_name):
         plot_submissions(participant_name)
     except:
         #participant_results.to_pickle('files_to_update/submissions.pkl')
-        participant_results.to_sql("submissions",con=connection_string,if_exists='replace', index=False)
+        participant_results.to_sql("submissions",con=connection_string,if_exists='append', index=False)
 
 def display_leaderboard():
     try:
